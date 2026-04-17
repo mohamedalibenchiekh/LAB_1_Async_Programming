@@ -1,0 +1,111 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 16.x, 18.x, 20.x ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Verify Node.js installation
+        run: |
+          node --version
+          npm --version
+
+      - name: Check JavaScript syntax
+        run: |
+          echo "Checking JavaScript syntax..."
+          for file in Lab1_*.js; do
+            echo "Checking $file..."
+            node -c "$file" || exit 1
+          done
+          echo "✅ All JavaScript files have valid syntax"
+
+      - name: Run Callbacks Example
+        run: |
+          echo "Running Lab1_Callbacks.js..."
+          node Lab1_Callbacks.js
+
+      - name: Run Promises Example
+        run: |
+          echo "Running Lab1_Promises.js..."
+          node Lab1_Promises.js
+
+      - name: Run Promises Chaining Example
+        run: |
+          echo "Running Lab1_Promises_Chaining.js..."
+          node Lab1_Promises_Chaining.js
+
+      - name: Run Async/Await Example
+        run: |
+          echo "Running Lab1_AsyncAwait.js..."
+          node Lab1_AsyncAwait.js
+
+      - name: Run Multiple Events Example
+        run: |
+          echo "Running Lab1_Async_MultipleEvents.js..."
+          node Lab1_Async_MultipleEvents.js
+
+      - name: Run Event Loop Example
+        run: |
+          echo "Running Lab1_EventLoop.js..."
+          node Lab1_EventLoop.js
+
+      - name: Run Performance Example
+        run: |
+          echo "Running Lab1_Performance.js..."
+          node Lab1_Performance.js
+
+      - name: Run Event Logger System
+        run: |
+          echo "Running Lab1_EventLogger.js..."
+          node Lab1_EventLogger.js
+
+      - name: Verify output files
+        run: |
+          echo "Checking for expected output files..."
+          if [ -f "analysis.log" ]; then
+            echo "✅ analysis.log found"
+          else
+            echo "❌ analysis.log not found"
+            exit 1
+          fi
+
+      - name: Display analysis log
+        run: |
+          echo "Contents of analysis.log:"
+          cat analysis.log
+
+      - name: Verify event files exist
+        run: |
+          echo "Checking for event data files..."
+          for file in event*.json; do
+            if [ -f "$file" ]; then
+              echo "✅ $file exists"
+            else
+              echo "❌ $file missing"
+              exit 1
+            fi
+          done
+
+      - name: Clean up generated files
+        run: |
+          echo "Cleaning up generated files..."
+          rm -f analysis.log
+          echo "✅ Cleanup completed"

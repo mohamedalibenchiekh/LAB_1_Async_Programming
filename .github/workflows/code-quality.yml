@@ -1,0 +1,100 @@
+name: Code Quality Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.x"
+
+      - name: Check for required files
+        run: |
+          echo "Checking for required lab files..."
+          required_files=(
+            "Lab1_Callbacks.js"
+            "Lab1_Promises.js"
+            "Lab1_Promises_Chaining.js"
+            "Lab1_AsyncAwait.js"
+            "Lab1_Async_MultipleEvents.js"
+            "Lab1_EventLoop.js"
+            "Lab1_Performance.js"
+            "Lab1_EventLogger.js"
+            "README.md"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ $file exists"
+            else
+              echo "❌ $file missing"
+              exit 1
+            fi
+          done
+
+      - name: Check file permissions
+        run: |
+          echo "Checking file permissions..."
+          for file in Lab1_*.js README.md; do
+            if [ -r "$file" ]; then
+              echo "✅ $file is readable"
+            else
+              echo "❌ $file is not readable"
+              exit 1
+            fi
+          done
+
+      - name: Validate JSON files
+        run: |
+          echo "Validating JSON files..."
+          for file in *.json; do
+            echo "Checking $file..."
+            if node -e "try { JSON.parse(require('fs').readFileSync('$file', 'utf8')); console.log('✅ Valid JSON'); } catch(e) { console.error('❌ Invalid JSON:', e.message); process.exit(1); }"; then
+              echo "✅ $file is valid JSON"
+            else
+              echo "❌ $file has invalid JSON"
+              exit 1
+            fi
+          done
+
+      - name: Check for TODO comments
+        run: |
+          echo "Checking for TODO comments..."
+          todo_count=$(grep -r "TODO\|FIXME\|XXX" Lab1_*.js | wc -l)
+          if [ "$todo_count" -gt 0 ]; then
+            echo "⚠️  Found $todo_count TODO/FIXME comments:"
+            grep -r "TODO\|FIXME\|XXX" Lab1_*.js
+          else
+            echo "✅ No TODO comments found"
+          fi
+
+      - name: Check code style consistency
+        run: |
+          echo "Checking code style consistency..."
+          # Check for consistent use of semicolons
+          js_files=$(ls Lab1_*.js)
+          for file in $js_files; do
+            lines_with_semicolon=$(grep -c ";" "$file")
+            total_lines=$(wc -l < "$file")
+            semicolon_ratio=$((lines_with_semicolon * 100 / total_lines))
+            echo "$file: $semicolon_ratio% lines use semicolons"
+          done
+
+      - name: Generate file statistics
+        run: |
+          echo "=== File Statistics ==="
+          echo "JavaScript files: $(ls Lab1_*.js | wc -l)"
+          echo "JSON files: $(ls *.json | wc -l)"
+          echo "Total lines of JS code: $(wc -l Lab1_*.js | tail -1 | awk '{print $1}')"
+          echo "======================="

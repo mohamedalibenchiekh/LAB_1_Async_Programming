@@ -1,5 +1,9 @@
 # Lab 1: Asynchronous Programming in Node.js
 
+[![Node.js CI](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/ci.yml/badge.svg)](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/ci.yml)
+[![Code Quality](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/code-quality.yml/badge.svg)](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/code-quality.yml)
+[![Documentation](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/docs-check.yml/badge.svg)](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/docs-check.yml)
+
 This laboratory explores asynchronous programming concepts in Node.js, demonstrating the evolution from traditional callbacks to modern async/await patterns.
 
 ## Overview
@@ -72,6 +76,37 @@ Asynchronous programming is crucial in Node.js for handling I/O operations witho
   - Data analysis and logging
   - Complete async/await implementation
 - **Run**: `node Lab1_EventLogger.js`
+
+## Continuous Integration
+
+This repository uses GitHub Actions for automated testing and quality assurance:
+
+### Workflows
+
+- **Node.js CI** (`ci.yml`): Runs all lab scripts on multiple Node.js versions (16.x, 18.x, 20.x) to ensure compatibility
+- **Code Quality** (`code-quality.yml`): Validates file structure, JSON syntax, and code consistency
+- **Documentation** (`docs-check.yml`): Ensures README completeness and validates file references
+
+### What Gets Tested
+
+- JavaScript syntax validation
+- Successful execution of all lab scripts
+- Presence of required output files (`analysis.log`)
+- JSON file validation
+- File permissions and accessibility
+- Documentation completeness
+
+## Development Workflow
+
+1. **Fork** the repository
+2. **Create** a feature branch: `git checkout -b feature/your-feature`
+3. **Make** your changes
+4. **Test** locally: `node Lab1_*.js` (run all scripts)
+5. **Commit** your changes: `git commit -m 'Add your feature'`
+6. **Push** to the branch: `git push origin feature/your-feature`
+7. **Create** a Pull Request
+
+All changes will be automatically tested via GitHub Actions before merging.
 
 ## Prerequisites
 
