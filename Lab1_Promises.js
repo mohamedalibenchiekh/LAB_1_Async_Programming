@@ -6,13 +6,7 @@ console.log('=== READING FILE WITH PROMISES ===\n');
 function readEventFile(filename) {
     return fs.readFile(filename, 'utf8')
     // .then() runs AFTER file is read
-    .then(data => {
-        try {
-            return JSON.parse(data); // Try to parse as JSON
-        } catch (err) {
-            throw err; // If parsing fails, throw error
-        }
-    })
+    .then(data => JSON.parse(data)) // Parse JSON directly - errors will bubble to .catch()
     // .catch() runs if ANYTHING goes wrong
     .catch(error => {
         console.log('❌ Error reading file:', error.message);
