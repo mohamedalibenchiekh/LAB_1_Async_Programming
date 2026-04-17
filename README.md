@@ -2,7 +2,6 @@
 
 [![Node.js CI](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/ci.yml/badge.svg)](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/ci.yml)
 [![Code Quality](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/code-quality.yml/badge.svg)](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/code-quality.yml)
-[![Documentation](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/docs-check.yml/badge.svg)](https://github.com/mohamedalibenchiekh/LAB_1_Async_Programming/actions/workflows/docs-check.yml)
 
 This laboratory explores asynchronous programming concepts in Node.js, demonstrating the evolution from traditional callbacks to modern async/await patterns.
 
@@ -85,7 +84,6 @@ This repository uses GitHub Actions for automated testing and quality assurance:
 
 - **Node.js CI** (`ci.yml`): Runs all lab scripts on multiple Node.js versions (16.x, 18.x, 20.x) to ensure compatibility
 - **Code Quality** (`code-quality.yml`): Validates file structure, JSON syntax, and code consistency
-- **Documentation** (`docs-check.yml`): Ensures README completeness and validates file references
 
 ### What Gets Tested
 
